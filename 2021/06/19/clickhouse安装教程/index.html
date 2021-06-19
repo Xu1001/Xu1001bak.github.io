@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="article title, Xu_Ops">
+    <meta name="keywords" content="clickhouse安装教程, Xu_Ops">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>article title | Xu_Ops</title>
+    <title>clickhouse安装教程 | Xu_Ops</title>
     <link rel="icon" type="image/png" href="/Xu1001.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/Xu1001.github.io/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/Xu1001.github.io/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/Xu1001.github.io/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">article title</h1>
+                    <h1 class="description center-align post-title">clickhouse安装教程</h1>
                 </div>
             </div>
         </div>
@@ -443,7 +443,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-17
+                    2021-06-19
                 </div>
                 
 
@@ -464,7 +464,26 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h3 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h3><h5 id="在-etc-security-limits-conf这个文件的末尾加入一下内容："><a href="#在-etc-security-limits-conf这个文件的末尾加入一下内容：" class="headerlink" title="在 /etc/security/limits.conf这个文件的末尾加入一下内容："></a>在 /etc/security/limits.conf这个文件的末尾加入一下内容：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br><span class="line">* soft nproc 131072</span><br><span class="line">* hard nproc 131072</span><br></pre></td></tr></table></figure>
+
+<h5 id="在-etc-security-limits-d-90-nproc-conf-这个文件的末尾加入一下内容："><a href="#在-etc-security-limits-d-90-nproc-conf-这个文件的末尾加入一下内容：" class="headerlink" title="在/etc/security/limits.d/90-nproc.conf 这个文件的末尾加入一下内容："></a>在/etc/security/limits.d/90-nproc.conf 这个文件的末尾加入一下内容：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br><span class="line">* soft nproc 131072</span><br><span class="line">* hard nproc 131072</span><br></pre></td></tr></table></figure>
+
+<h5 id="重启服务器之后生效，用-ulimit-n-或者-ulimit-a-查看设置结果"><a href="#重启服务器之后生效，用-ulimit-n-或者-ulimit-a-查看设置结果" class="headerlink" title="重启服务器之后生效，用 ulimit -n 或者 ulimit -a 查看设置结果"></a>重启服务器之后生效，用 ulimit -n 或者 ulimit -a 查看设置结果</h5><h5 id="关闭selinux"><a href="#关闭selinux" class="headerlink" title="关闭selinux"></a>关闭selinux</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.修改 /etc/selinux/config </span><br><span class="line">      SELINUX=disabled</span><br><span class="line"></span><br><span class="line">2. bash执行setenforce 0</span><br></pre></td></tr></table></figure>
+
+<h5 id="检查CPU是否支持SSE4-2指令集，因为向量化执行需要用到这项特性："><a href="#检查CPU是否支持SSE4-2指令集，因为向量化执行需要用到这项特性：" class="headerlink" title="检查CPU是否支持SSE4.2指令集，因为向量化执行需要用到这项特性："></a>检查CPU是否支持SSE4.2指令集，因为向量化执行需要用到这项特性：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -q sse4_2 /proc/cpuinfo &amp;&amp; echo &quot;SSE 4.2 supported&quot; || echo &quot;SSE 4.2 not supported&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y libtool *unixODBC*</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="安装clickhouse单机"><a href="#安装clickhouse单机" class="headerlink" title="安装clickhouse单机"></a>安装clickhouse单机</h3><h5 id="YUM安装"><a href="#YUM安装" class="headerlink" title="YUM安装"></a>YUM安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum install yum-utils -y</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">配置yum源</span></span><br><span class="line">rpm --import https://repo.clickhouse.tech/CLICKHOUSE-KEY.GPG</span><br><span class="line">yum-config-manager --add-repo https://repo.clickhouse.tech/rpm/clickhouse.repo</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">安装</span></span><br><span class="line">yum install clickhouse-server clickhouse-client -y</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#配置文件/etc/clickhouse-server/config.xml</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--为避免与hdfs端口冲突 。需要修改tcp端口，如修改为9977--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tcp_port</span>&gt;</span>9977<span class="tag">&lt;/<span class="name">tcp_port</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--删除监听端口的行注释，允许指定主机访问--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">listen_host</span>&gt;</span>0.0.0.0<span class="tag">&lt;/<span class="name">listen_host</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="配置用户"><a href="#配置用户" class="headerlink" title="配置用户"></a>配置用户</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#配置文件/etc/clickhouse-server/users.xml</span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">users</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">bigdata</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>BigData_1929<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">networks</span> <span class="attr">incl</span>=<span class="string">&quot;networks&quot;</span> <span class="attr">replace</span>=<span class="string">&quot;replace&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ip</span>&gt;</span>::/0<span class="tag">&lt;/<span class="name">ip</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">networks</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">profile</span>&gt;</span>default<span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">quota</span>&gt;</span>default<span class="tag">&lt;/<span class="name">quota</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">bigdata</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">users</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="启动服务端"><a href="#启动服务端" class="headerlink" title="启动服务端"></a>启动服务端</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start clickhouse-server</span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>
@@ -490,7 +509,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/Xu1001/Xu1001.github.io/Xu1001.github.io/2021/06/17/article-title/">https://github.com/Xu1001/Xu1001.github.io/Xu1001.github.io/2021/06/17/article-title/</a>
+                    <a href="https://github.com/Xu1001/Xu1001.github.io/Xu1001.github.io/2021/06/19/clickhouse%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">https://github.com/Xu1001/Xu1001.github.io/Xu1001.github.io/2021/06/19/clickhouse%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -697,9 +716,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/Xu1001.github.io/2021/06/19/clickhouse%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">
                     <div class="card-image">
@@ -717,9 +737,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -728,6 +748,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -738,13 +759,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/Xu1001.github.io/2021/06/17/hello-world/">
+                <a href="/Xu1001.github.io/2021/06/17/article-title/">
                     <div class="card-image">
                         
                         
-                        <img src="/Xu1001.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/Xu1001.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="article title">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">article title</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
